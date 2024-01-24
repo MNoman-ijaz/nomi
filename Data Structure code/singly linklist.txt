@@ -1,0 +1,122 @@
+#include<iostream>
+using namespace std;
+class Node
+{
+public:
+	int data;
+	Node* next;
+	Node(int d)
+	{
+		data = d;
+		next = NULL;
+	}
+};
+class linklist
+{
+private:
+	Node* Head;
+public:
+	linklist()
+	{
+		Head = NULL;
+	}
+	void insertatHead(int d) //inserting node at head
+	{
+		Node* temp = new Node(d);
+		temp->next = Head;
+		 Head=temp;
+	}
+	void insertattail(int da)
+	{
+		Node* tail = new Node(da);
+		Head->next = tail;
+		tail=tail->next;
+	}
+	void insertatmid(int pos,int d)
+	{
+		//insert at start
+		if (pos==1)
+		{
+			insertatHead(d);
+			return;
+		}
+		Node* temp = Head;
+		int cnt = 1;
+		while (cnt<pos-1)
+		{
+			temp = temp->next;
+			cnt++;
+		}
+		//inserting at last position
+		if (temp->next==NULL)
+		{
+			insertattail(d);
+			return;
+		}
+		//creating a Node for d 
+		Node* nodetoinsert = new Node(d);
+		nodetoinsert->next = temp->next;
+		temp->next = nodetoinsert;
+
+	}
+	void deleteNod(int pos)
+	{
+		if (pos==1)
+		{
+			Node*temp = Head;
+			Head = Head->next;
+			//memory free start Node
+			temp->next = NULL;
+			delete temp;
+		}
+		else
+		{
+			//deleting any middle node or last node
+			Node* curr = Head;
+			Node* prev = NULL;
+			int cnt = 1;
+			while (cnt<pos)
+			{
+				prev = curr;
+				curr = curr->next;
+				cnt++;
+			}
+			prev->next = curr->next;
+			prev->next = NULL;
+			delete curr;
+		}
+
+	}
+	void display()
+	{
+		Node* temp = Head;
+		while (temp!= NULL)
+		{
+			cout << temp->data << " ";
+			temp = temp->next;
+		}
+		cout << endl;
+	}
+};
+int main()
+{
+	linklist obj;
+	obj.insertatHead(10);
+	obj.display();
+	obj.insertatHead(12);
+	obj.display();
+	obj.insertatHead(15);
+	obj.display();
+	obj.insertattail(9);
+	obj.display();
+	obj.insertattail(8);
+	obj.display();
+	obj.insertattail(7);
+	obj.display();
+	obj.insertatmid(2,22);
+	obj.display();
+	obj.deleteNod(3);
+	obj.display();
+	system("color E");
+	system("pause");
+}

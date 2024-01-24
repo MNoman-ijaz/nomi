@@ -1,0 +1,98 @@
+#include<iostream>
+using namespace std;
+class Node
+{
+public:
+	int data;
+	Node* next;
+	Node(int d)
+	{
+		this->data = d;
+		this->next = NULL;
+	}
+	~Node()
+	{
+		int value = this->data;
+		if (this->next!=NULL)
+		{
+			delete next;
+			next = NULL;
+
+		}
+		cout << "Memory is free for data with value " << value << endl; 
+	}
+};
+void insertnode(Node* tail, int elem, int d) //taking an element 
+{
+	//for empty list
+	if (tail == NULL)
+	{
+		Node* newnode = new Node(d);
+		tail = newnode;
+		newnode->next = newnode;
+	}
+	else
+	{                            //non empty list 
+		Node* curr = tail;
+		while (curr->data != elem)
+		{
+			curr = curr->next;
+		}
+		Node* temp = new Node(d);
+		temp->next = curr->next;
+		curr->next = temp;
+	}
+}
+
+void print(Node* tail)
+{
+	Node* temp = tail;
+	do
+	{
+		cout << tail->data << " ";
+		tail = tail->next;
+	} while (tail!=temp);
+	
+}
+void deletenode(Node* &tail,int value)
+{
+	if (tail==NULL)
+	{
+		cout << "List is empty plz check again " << endl;
+	}
+	else
+	{
+		Node* prev = tail;
+		Node* curr = prev->next;
+		while (curr->data!=value)
+		{
+			prev = curr;
+			curr = curr->next;
+
+		}
+		prev->next = curr->next;
+		if (tail==curr)
+		{
+			tail = prev;
+		}
+		curr->next = NULL;
+		delete curr;
+	}
+}
+int main()
+{
+	Node* tail = NULL;
+	insertnode(tail, 5, 3);
+	print(tail);
+	insertnode(tail, 3, 5);
+	print(tail);
+	insertnode(tail, 3, 6);
+	print(tail);
+	insertnode(tail, 9, 10);
+	print(tail);
+	insertnode(tail, 3, 4);
+	print(tail);
+	deletenode(tail, 10);
+	print(tail);
+	system("pause");
+}

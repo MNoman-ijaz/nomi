@@ -1,0 +1,98 @@
+#include <iostream>
+using namespace std;
+struct Product 
+{
+
+	string name;
+	int price;
+	Product* prev;
+	Product* next;
+};
+Product* head = NULL;
+Product* tail = NULL;
+int balance = 0;
+void addProduct(string name, int price) 
+{
+	Product* newProduct = new Product;
+	newProduct->name = name;
+	newProduct->price = price;
+	newProduct->prev = NULL;
+	newProduct->next = NULL;
+
+	if (head == NULL) {
+		head = newProduct;
+		tail = newProduct;
+	}
+	else 
+	{
+		tail->next = newProduct;
+		newProduct->prev = tail;
+		tail = newProduct;
+	}
+}
+
+void displayProducts() {
+	Product* current = head;
+
+	while (current != NULL) 
+	{
+	//	cout << "Product: "<< current->name << ", Price: " << current->price << endl;
+		current = current->next;
+	}
+}
+
+void buyProduct(int price) {
+	Product* current = head;
+	while (current != NULL) {
+		if (current->price == price) {
+			if (balance >= price) {
+			//	cout << "You have bought " << current->name << " for " << current->price << endl;
+				balance -= current->price;
+				if (current == head) {
+					head = current->next;
+					if (head != NULL) {
+						head->prev = NULL;
+					}
+				}
+				else if (current == tail) {
+					tail = current->prev;
+					if (tail != NULL) {
+						tail->next = NULL;
+					}
+				}
+				else {
+					current->prev->next = current->next;
+					current->next->prev = current->prev;
+				}
+				delete current;
+			}
+			else {
+				cout << "Insufficient balance" << endl;
+			}
+			return;
+		}
+		current = current->next;
+	}
+	cout << "Product not found" << endl;
+}
+
+int main() {
+	// Admin adds products
+	addProduct("Shirt", 20);
+	addProduct("Pants", 30);
+	addProduct("Shoes", 50);
+
+	// Display products
+	displayProducts();
+
+	// Customer buys products
+	balance = 100;
+	buyProduct(30);
+	buyProduct(50);
+
+	// Display remaining products and balance
+	displayProducts();
+	cout << "Remaining balance: " << balance << endl;
+	system("pause");
+	return 0;
+}

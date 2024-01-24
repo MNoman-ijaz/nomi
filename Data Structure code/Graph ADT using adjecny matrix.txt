@@ -1,0 +1,134 @@
+#include <iostream>
+
+const int MAX_NODES = 10;
+using namespace std;
+class Graph
+{
+private:
+	int adjMatrix[MAX_NODES][MAX_NODES] = { 0 };
+	int numNodes = 0;
+public:
+	void insert(int key, int connected_keys[])
+	{
+		if (numNodes >= MAX_NODES) {
+			cout << "Cannot add more nodes. The graph is already full." << endl;
+			return;
+		}
+		numNodes++;
+		for (int i = 0; connected_keys[i] != -1; i++) {
+			int connected_key = connected_keys[i];
+			if (connected_key >= 1 && connected_key <= MAX_NODES) {
+				adjMatrix[key - 1][connected_key - 1] = 1;
+				adjMatrix[connected_key - 1][key - 1] = 1;
+			}
+		}
+	}
+	void remove(int key) {
+		if (key < 1 || key > MAX_NODES) {
+			cout << "Invalid node key. Node key should be between 1 and " << MAX_NODES << "." << endl;
+			return;
+		}
+
+		if (numNodes == 0) {
+			cout << "The graph is empty. Cannot remove node." << endl;
+			return;
+		}
+
+		key--; // Convert to 0-based index
+
+		// Remove connections with other nodes
+		for (int i = 0; i < numNodes; i++) {
+			adjMatrix[i][key] = 0;
+			adjMatrix[key][i] = 0;
+		}
+		// Mark the node as removed
+		for (int i = key; i < numNodes - 1; i++) {
+			for (int j = 0; j < numNodes; j++) {
+				adjMatrix[j][i] = adjMatrix[j][i + 1];
+			}
+		}
+		for (int i = key; i < numNodes - 1; i++)
+		{
+			for (int j = 0; j < numNodes; j++) {
+				adjMatrix[i][j] = adjMatrix[i + 1][j];
+			}
+		}
+		numNodes--;
+	}
+	void display()
+	{
+		if (numNodes == 0) {
+			cout << "The graph is empty." << endl;
+			return;
+		}
+		for (int i = 0; i < numNodes; i++)
+		{
+			cout << i + 1 << " : ";
+			bool first = true;
+			for (int j = 0; j < numNodes; j++) 
+			{
+				if (adjMatrix[i][j] == 1) {
+					if (!first) {
+						cout << ", ";
+					}
+					cout << j + 1;
+					first = false;
+				}
+			}
+			cout << endl;
+		}
+	}
+};
+int main() 
+{
+	Graph obj;
+
+	while (true) {
+		int option;
+		cout << "Choose an option:" << endl;
+		cout << "1. Insert node" << endl;
+		cout << "2. Delete node" << endl;
+		cout << "3. Display graph" << endl;
+		cout << "4. Exit" << endl;
+		cout << "Option: ";
+		cin >> option;
+
+		if (option == 1) {
+			int key;
+			cout << "Enter node key: ";
+			cin >> key;
+
+			int connected_keys[MAX_NODES + 1] = { 0 };
+			int i = 0;
+			int connected_key;
+			cout << "Enter connected keys (enter -1 to stop): ";
+			while (true) {
+				cin >> connected_key;
+				if (connected_key == -1)
+					break;
+				connected_keys[i++] = connected_key;
+			}
+
+			obj.insert(key, connected_keys);
+		}
+		else if (option == 2) {
+			int key;
+			cout << "Enter node key to delete: ";
+			cin >> key;
+
+			obj.remove(key);
+		}
+		else if (option == 3) {
+			cout << "Graph:" << endl;
+			obj.display();
+		}
+		else if (option == 4) {
+			break;
+		}
+		else {
+			cout << "Invalid option. Try again." << endl;
+		}
+	}
+	system("pause");
+	return 0;
+}

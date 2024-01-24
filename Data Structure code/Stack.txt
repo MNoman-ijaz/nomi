@@ -1,0 +1,61 @@
+#include<iostream>
+using namespace std;
+#define n 10                       //static   
+class Stack
+{
+	int *arr;
+	int top;
+public:
+	Stack()
+	{
+		arr = new int[n];          //Taking dynamic array 
+		top = -1;
+	}
+	void push(int x)                //operations of stack
+	{
+		if (top==n-1)
+		{
+			cout << "Stack over Flow" << endl;
+			return;
+		}
+		top++;
+		arr[top] = x;
+	}
+	void pop()
+	{
+		if (top==-1)
+		{
+			cout << "No element to pop" << endl;
+			return;
+		}
+		top--;
+	}
+	int Top()
+	{
+		if (top == -1)
+		{
+			cout << "No element in Stack " << endl;
+			return -1;
+		}
+		return arr[top];
+	}
+	bool empty()
+	{
+		return top == -1;
+	}
+};
+int main()
+{
+	Stack obj;
+	obj.push(1);
+	obj.push(2);
+	obj.push(3);
+	cout << obj.Top() << endl;
+	obj.pop();
+	cout << obj.Top() << endl;
+	obj.pop();
+	obj.pop();
+	obj.pop();
+	cout << obj.empty() << endl;
+	system("pause");
+}

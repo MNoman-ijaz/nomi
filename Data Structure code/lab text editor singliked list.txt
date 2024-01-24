@@ -1,0 +1,115 @@
+#include <iostream>
+#include<string>
+using namespace std;
+class Node 
+{
+public:
+	string text;
+	Node* next;
+	Node(const string& text) : text(text), next(nullptr) 
+	{
+	}
+};
+class TextEditor {
+private:
+	Node* head;
+	Node* tail;
+	int num_lines;
+public:
+	TextEditor() : head(nullptr), tail(nullptr), num_lines(0) {}
+
+	void insert_line(int line_number, const string& text) 
+	{
+		if (line_number < 0 || line_number > num_lines) 
+		{
+			cout << "Error: Line number is out of range." << endl;
+			return;
+		}
+		Node* new_node = new Node(text);
+		if (line_number == 0) {
+			new_node->next = head;
+			head = new_node;
+			if (num_lines == 0)
+				tail = new_node;
+		}
+		else if (line_number == num_lines) {
+			tail->next = new_node;
+			tail = new_node;
+		}
+		else 
+		{
+			Node* prev_node = get_node(line_number - 1);
+			new_node->next = prev_node->next;
+			prev_node->next = new_node;
+		}
+		num_lines++;
+	}
+	void delete_line(int line_number) {
+		if (line_number < 0 || line_number >= num_lines) {
+			cout << "Error: Line number is out of range." << endl;
+			return;
+		}
+		Node* node_to_delete;
+		if (line_number == 0) {
+			node_to_delete = head;
+			head = head->next;
+			if (num_lines == 1)
+				tail = nullptr;
+		}
+		else 
+		{
+			Node* prev_node = get_node(line_number - 1);
+			node_to_delete = prev_node->next;
+			prev_node->next = node_to_delete->next;
+			if (line_number == num_lines - 1)
+				tail = prev_node;
+		}
+		delete node_to_delete;
+		num_lines--;
+	}
+	void edit_line(int line_number, const string& text)
+	{
+		if (line_number < 0 || line_number >= num_lines) 
+		{
+			cout << "Error: Line number is out of range." << endl;
+			return;
+		}
+		Node* node = get_node(line_number);
+		node->text = text;
+	}
+	string get_line(int line_number)
+	{
+		if (line_number < 0 || line_number >= num_lines)
+			return "";
+
+		Node* node = get_node(line_number);
+		return node->text;
+	}
+	void display_document() {
+		Node* curr_node = head;
+		while (curr_node!=NULL) 
+		{
+			cout << curr_node->text << endl;
+			curr_node = curr_node->next;
+		}
+	}
+	Node* get_node(int line_number) {
+		Node* curr_node = head;
+		for (int i = 0; i < line_number; i++) {
+			curr_node = curr_node->next;
+		}
+		return curr_node;
+	}
+};
+
+int main() {
+	TextEditor editor;
+	editor.insert_line(0, "First line");
+	editor.insert_line(1, "Second line");
+	editor.insert_line(2, "Third line");
+	editor.display_document();
+	editor.edit_line(1, "Updated line");
+	string line = editor.get_line(1);
+	cout << line;
+	system("pause");
+}

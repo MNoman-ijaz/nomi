@@ -1,0 +1,172 @@
+#include <iostream>
+using namespace std;
+
+struct Player {
+    int playerId;
+    string playerName;
+    int score;
+    Player* prev;
+    Player* next;
+};
+
+class Leaderboard {
+private:
+    Player* head;
+    Player* tail;
+
+public:
+    Leaderboard() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    void addPlayer(int playerId, string playerName, int score) {
+        Player* newPlayer = new Player();
+        newPlayer->playerId = playerId;
+        newPlayer->playerName = playerName;
+        newPlayer->score = score;
+        newPlayer->prev = nullptr;
+        newPlayer->next = nullptr;
+
+        if (head == nullptr) {
+            head = newPlayer;
+            tail = newPlayer;
+        } else {
+            Player* curr = head;
+            while (curr != nullptr && curr->score >= score) {
+                curr = curr->next;
+            }
+
+            if (curr == head) {
+                newPlayer->next = head;
+                head->prev = newPlayer;
+                head = newPlayer;
+            } else if (curr == nullptr) {
+                tail->next = newPlayer;
+                newPlayer->prev = tail;
+                tail = newPlayer;
+            } else {
+                newPlayer->next = curr;
+                newPlayer->prev = curr->prev;
+                curr->prev->next = newPlayer;
+                curr->prev = newPlayer;
+            }
+        }
+    }
+
+    void removePlayer(int playerId) {
+        Player* curr = head;
+        while (curr != nullptr) {
+            if (curr->playerId == playerId) {
+                if (curr == head) {
+                    head = head->next;
+                    if (head != nullptr) {
+                        head->prev = nullptr;
+                    } else {
+                        tail = nullptr;
+                    }
+                } else if (curr == tail) {
+                    tail = tail->prev;
+                    tail->next = nullptr;
+                } else {
+                    curr->prev->next = curr->next;
+                    curr->next->prev = curr->prev;
+                }
+
+                delete curr;
+                return;
+            }
+
+            curr = curr->next;
+        }
+
+        cout << "Player with ID " << playerId << " not found." << endl;
+    }
+
+    void updateScore(int playerId, int score) {
+        Player* curr = head;
+        while (curr != nullptr) {
+            if (curr->playerId == playerId) {
+                curr->score = score;
+
+                if (curr != head) {
+                    Player* prevPlayer = curr->prev;
+                    if (prevPlayer->score < score) {
+                        prevPlayer->next = curr->next;
+                        if (curr->next != nullptr) {
+                            curr->next->prev = prevPlayer;
+                        } else {
+                            tail = prevPlayer;
+                        }
+
+                        while (prevPlayer->prev != nullptr && prevPlayer->prev->score < score) {
+                            prevPlayer = prevPlayer->prev;
+                        }
+
+                        curr->next = prevPlayer;
+                        curr->prev = prevPlayer->prev;
+                        if (prevPlayer->prev != nullptr) {
+                            prevPlayer->prev->next = curr;
+                        } else {
+                            head = curr;
+                        }
+                        prevPlayer->prev = curr;
+                    }
+                }
+
+                return;
+            }
+
+            curr = curr->next;
+        }
+
+        cout << "Player with ID " << playerId << " not found." << endl;
+    }
+
+    vector<pair<int, int>> getTopPlayers(int n) {
+        vector<pair<int, int>> topPlayers;
+        Player* curr = head;
+        int count = 0;
+
+        while (curr != nullptr && count < n) {
+            topPlayers.push_back(make_pair(curr->playerId, curr->score));
+            curr = curr->next;
+            count++;
+        }
+
+        return topPlayers;
+    }
+};
+
+int main() {
+    Leaderboard leaderboard;
+
+    leaderboard.addPlayer(1, "John", 100);
+    leaderboard.addPlayer(2, "Alice", 200);
+    leaderboard.addPlayer(3, "Bob", 150);
+    leaderboard.addPlayer(4, "David", 120);
+
+    cout << "Top Players: " << endl;
+    vector<pair<int, int>> topPlayers = leaderboard.getTopPlayers(3);
+    for (auto& player : topPlayers) {
+        cout << "Player ID: " << player.first << ", Score: " << player.second << endl;
+    }
+
+    leaderboard.updateScore(2, 250);
+
+    cout << "Top Players after score update: " << endl;
+    topPlayers = leaderboard.getTopPlayers(3);
+    for (auto& player : topPlayers) {
+        cout << "Player ID: " << player.first << ", Score: " << player.second << endl;
+    }
+
+    leaderboard.removePlayer(3);
+
+    cout << "Top Players after player removal: " << endl;
+    topPlayers = leaderboard.getTopPlayers(3);
+    for (auto& player : topPlayers) {
+        cout << "Player ID: " << player.first << ", Score: " << player.second << endl;
+    }
+
+    return 0;
+}
