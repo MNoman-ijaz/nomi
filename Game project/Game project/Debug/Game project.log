@@ -1,0 +1,4 @@
+﻿  Source.cpp
+c:\users\noman\source\repos\game project\game project\source.cpp(7): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\noman\source\repos\game project\game project\source.cpp(17): warning C4101: 'array': unreferenced local variable
+  Game project.vcxproj -> C:\Users\Noman\source\repos\Game project\Debug\Game project.exe
