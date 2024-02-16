@@ -1,0 +1,19 @@
+<html>
+<head>
+<body>
+<title>My First web page</title>
+My Name is Noman ijaz
+he is going to school
+<h1>ALL is well </h1>
+<h2>No pain no gain </h2>
+<p>This is a another paragraph
+he is a good person</p>
+<a href="https://www.w3schools.com/">This is a link to most important website </a>
+<br><a href="https://www.google.com/">This is a link for google </a></br>
+<img src="C:\Users\Noman\thumb-1920-339197.jpg">
+<body style="border-radius:40px"></style>
+<body style="background-color:powder blue"></style>
+</img>
+</body>
+</html>
+</head>
