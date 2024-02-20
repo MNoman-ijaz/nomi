@@ -1,0 +1,36 @@
+  body
+  {
+margin: 0px;
+padding: 0px;
+/* background-image: url(pick1.jpg); */
+  }        
+h1{
+    text-align: center;
+}
+.navbar ul
+{
+    list-style-type: none;
+    background-color: rgb(197, 197, 197);
+    padding: 0px;
+    margin: 0px;
+}
+.navbar a
+{
+    color: rgb(2, 0, 0);
+    text-decoration:aqua;
+    padding: 15px;
+    display:flex;
+    text-align:center;
+
+}
+.navbar a:hover
+{
+    background-color:rgb(21, 8, 8);
+    display:flex;
+}
+h3,h4,p{
+  text-align:center;
+  background-color:rgb(255, 245, 245);
+  color:rgb(120, 34, 34);
+
+}

@@ -1,0 +1,31 @@
+body{
+    margin: 0px;
+    padding: 0px;
+}
+h1{
+    text-align: center;
+}
+.navbar ul
+{
+list-style-type:none;
+background-color: rgb(40, 10, 10);
+margin: 0px;
+padding: 0px;
+height: 70px;
+text-align: center;
+
+}
+.navbar ul
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 43px;
+
+    width: 37%;
+    /* background-color: red; */
+    display: flex;
+    flex-direction: row;
+
+
+}

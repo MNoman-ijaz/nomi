@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lab.css">
+    <title>Image Slider</title>
+</head>
+<body>
+
+<div class="cont">
+    
+    
+    <div class="slider-container">
+        <input type="radio" id="img1" name="slider-radio" checked>
+        <input type="radio" id="img2" name="slider-radio">
+        <input type="radio" id="img3" name="slider-radio">
+        <input type="radio" id="img4" name="slider-radio">
+
+        <div class="slider">
+            <div class="slide" id="m1"><img src="task1.jpg" alt="Image 1"></div>
+            <div class="slide" id="m2"><img src="task1slidei.jpg" alt="Image 2"></div>
+            <div class="slide" id="m3"><img src="task1slider.jpg" alt="Image 3"></div>
+            <div class="slide" id="m4"><img src="task1.jpg" alt="Image 4"></div>
+        </div>
+        
+        <div class="dots">
+            <label for="img1"></label>
+            <label for="img2"></label>
+            <label for="img3"></label>
+            <label for="img4"></label>
+        </div>
+    </div>
+    
+    <button onclick="openLoginForm()">OpenForm</button>
+    
+    <div class="form-popup" id="myform">
+        <form action="#" class="form-container">
+            <h2>Login Form</h2>
+            
+            <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required>
+            
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+
+            <button type="submit" class="btn">Login</button>
+            <button type="button" class="btn cancel" onclick="closeLoginForm()">Close</button>
+        </form>
+    </div>
+
+</div>
+    <script src="script.js"></script>
+</body>
+</html>

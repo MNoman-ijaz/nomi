@@ -1,0 +1,88 @@
+/* Reset some default styles */
+body, h1, h2, p, ul, li, button, input {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Main Content Styles */
+.home {
+    padding: 20px;
+}
+
+.mainslide1 h1 {
+    font-size: 36px;
+}
+
+.mainslide1 span {
+    color: #ff0000; /* Change to your preferred color */
+}
+
+.mainslide1 button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.mainslide1-image {
+    /* Add styling for the image on the right side */
+}
+
+.news-section {
+    /* Add styling for the news section */
+}
+
+.video-audio-section {
+    /* Add styling for the video and audio section */
+}
+
+.fixed-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.map-section {
+    /* Add styling for the map section */
+}
+
+.add-news-form {
+    /* Add styling for the add news form section */
+}
+
+/* Add your responsive styles as needed */
+
